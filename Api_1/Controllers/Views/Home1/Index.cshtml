@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous"></script>
+<h2>Index</h2>
+<input type="button" value="Get All Employee" id="btn1" />
+<br />
+<input type="text" placeholder="Enter placeholder Id" id="txt" />
+<input type="button" value="Get Employee By Id " id="btn3" />
+
+<input type="button" value="Clear" id="btn2" />
+
+<br />
+
+<div id="ShowData"> 
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#btn1").click(function () {
+            $("#ShowData").empty(); // Clear existing data
+            $.getJSON('/api/EmployeeData', function (responseData) {
+                console.log(responseData);
+                $.each(responseData, function (key, val) {
+                    var item = "<h2>" + val + "</h2>";
+                    $(item).appendTo("#ShowData");
+                });
+            });
+        });
+
+        $("#btn2").click(function () {
+            $("#ShowData").empty(); // Clear data when "Clear" button is clicked
+        });
+
+        $("#btn3").click(function () {
+            var id = $("#txt").val();
+            $.getJSON('/api/EmployeeData/' + id, function (responseData) {
+
+                var item = "<h2>" + responseData + "</h2>";
+                $(item).appendTo("#ShowData");
+
+            })
+        });
+
+    });
+</script>
+
+@*//when document will be ready then call this function
+      //we want the api format in json format thats why we add getjson function , getjson
+      // has two parameter or root then add a new function and my api's info store in respondata
+      //variable  , and this new function
+    // Log responseData to inspect its structure
+         // for each use it gives valu for etrate one by one so
+                        //for each add variable responsedata
+    // Replace "propertyName" with the actual property name //item tore variable data append meanse get the data apendt to*@
